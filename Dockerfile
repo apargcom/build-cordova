@@ -1,38 +1,40 @@
-FROM node:14.18-stretch-slim as base
+ARG NODE_VERSION DEBIAN_VERSION
+FROM node:${NODE_VERSION}-${DEBIAN_VERSION}-slim as base
 
-WORKDIR /usr/src/cordova
+ARG ANDROID_API_LEVEL GRADLE_VERSION JDK_VERSION
 
 RUN apt-get update && \
-    apt-get -y install openjdk-8-jdk
-
-RUN cd /usr/lib && \
     apt-get -y install wget && \
-    apt-get -y install unzip && \
-    wget -O cmdtools.zip https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip && \
-    mkdir android && \
-    unzip cmdtools.zip -d /usr/lib/android && \
-    mv android/cmdline-tools android/tools && \
+    apt-get -y install unzip
+
+RUN apt-get -y install openjdk-${JDK_VERSION}-jdk
+
+RUN npm install -g cordova
+
+WORKDIR /usr/lib/android
+RUN wget -O cmdtools.zip https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip && \
+    unzip cmdtools.zip -d . && \
     rm cmdtools.zip && \
-    cd  android/tools/bin && \
-    yes | ./sdkmanager --licenses --sdk_root="/usr/lib/android" && \
-    ./sdkmanager "platform-tools" "platforms;android-29" --sdk_root="/usr/lib/android" && \
-    export ANDROID_SDK_ROOT="/usr/lib/android" && \
-    export ANDROID_HOME="/usr/lib/android/platforms/android-29" && \
-    export PATH=${PATH}:/usr/lib/android/tools:/usr/lib/android/platform-tools
+    mv cmdline-tools tools && \
+    yes | ./tools/bin/sdkmanager --licenses --sdk_root="/usr/lib/android" && \
+    ./tools/bin/sdkmanager "platform-tools" "platforms;android-${ANDROID_API_LEVEL}" --sdk_root="/usr/lib/android"
+ENV ANDROID_SDK_ROOT=/usr/lib/android \
+    ANDROID_HOME=/usr/lib/android/platforms/android-${ANDROID_API_LEVEL} \
+    PATH=${PATH}:/usr/lib/android/tools:/usr/lib/android/platform-tools
 
-RUN  cd /usr/lib/android && \
-    wget -O gradle.zip https://services.gradle.org/distributions/gradle-6.5-bin.zip && \
-    unzip gradle.zip -d /usr/lib/android && \
-    rm gradle.zip && \
-    export GRADLE_HOME=/usr/lib/android/gradle-6.5 && \
-    export PATH=${GRADLE_HOME}/bin:${PATH}
+RUN wget -O gradle.zip https://services.gradle.org/distributions/gradle-6.1.1-bin.zip && \
+    unzip gradle.zip -d . && \
+    rm gradle.zip
+ENV GRADLE_HOME=/usr/lib/android/gradle-${GRADLE_VERSION} \
+    PATH=${PATH}:/usr/lib/android/gradle-${GRADLE_VERSION}/bin
 
-RUN cd /usr/src/cordova && \
-    npm install -g cordova
+WORKDIR /usr/src/cordova
+#TODO: Work on build process
+CMD read pause
+    #cordova platform add android --no-telemetry && \
+    #cordova build --no-telemetry && \
+    #cp -a ./PATH_TO_BUILD_FOLDER/. /usr/src/cordova/build/
 
-CMD cd src && \
-    cordova platform add android && \
-    cordova build && \
-    read pause
+    
 
 

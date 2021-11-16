@@ -5,7 +5,12 @@ services:
     stdin_open: true
     build:
       context: .
+      args:
+        ANDROID_API_LEVEL: ${ANDROID_API_LEVEL}
+        GRADLE_VERSION: ${GRADLE_VERSION}
+        NODE_VERSION: ${NODE_VERSION}
+        DEBIAN_VERSION: ${DEBIAN_VERSION}
+        JDK_VERSION: ${JDK_VERSION}
     volumes:
-      - ./src:/usr/src/cordova/src
-    env_file:
-      - .env
+      - ./src:/usr/src/cordova
+      - ./build:/usr/src/cordova/build
