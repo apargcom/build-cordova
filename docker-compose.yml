@@ -13,4 +13,6 @@ services:
         JDK_VERSION: ${JDK_VERSION}
     volumes:
       - ./src:/usr/src/cordova
-      - ./build:/usr/src/cordova/build
+      - ./build:/usr/src/cordova/PATH_TO_BUILD_FOLDER
+    env_file:
+      - .env

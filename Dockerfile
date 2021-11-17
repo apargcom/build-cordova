@@ -4,6 +4,7 @@ FROM node:${NODE_VERSION}-${DEBIAN_VERSION}-slim as base
 ARG ANDROID_API_LEVEL GRADLE_VERSION JDK_VERSION
 
 RUN apt-get update && \
+    apt-get -y install git && \
     apt-get -y install wget && \
     apt-get -y install unzip
 
@@ -30,10 +31,11 @@ ENV GRADLE_HOME=/usr/lib/android/gradle-${GRADLE_VERSION} \
 
 WORKDIR /usr/src/cordova
 #TODO: Work on build process
-CMD read pause
+CMD ${ALWAYS_RUN} && read PAUSE
+    cordova platform add android --no-telemetry ; \
     #cordova platform add android --no-telemetry && \
-    #cordova build --no-telemetry && \
-    #cp -a ./PATH_TO_BUILD_FOLDER/. /usr/src/cordova/build/
+    #cordova build --no-telemetry
+    
 
     
 

@@ -1,5 +1,5 @@
 # Build Cordova app 
-### Copy .env file
+### Create .env file
 ```
 cp .env.example .env
 ```
