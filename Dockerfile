@@ -17,8 +17,8 @@ RUN wget -O cmdtools.zip https://dl.google.com/android/repository/commandlinetoo
     unzip cmdtools.zip -d . && \
     rm cmdtools.zip && \
     #mv cmdline-tools tools && \
-    yes | ./tools/bin/sdkmanager --licenses --sdk_root="/usr/lib/android" && \
-    ./tools/bin/sdkmanager "build-tools;30.0.2" "platform-tools" "platforms;android-${ANDROID_API_LEVEL}" --sdk_root="/usr/lib/android"
+    yes | ./cmdline-tools/bin/sdkmanager --licenses --sdk_root="/usr/lib/android" && \
+    ./cmdline-tools/bin/sdkmanager "build-tools;30.0.2" "platform-tools" "platforms;android-${ANDROID_API_LEVEL}" --sdk_root="/usr/lib/android"
 ENV ANDROID_SDK_ROOT=/usr/lib/android \
     ANDROID_HOME=/usr/lib/android/platforms/android-${ANDROID_API_LEVEL} \
     PATH=${PATH}:/usr/lib/android/tools:/usr/lib/android/platform-tools:/usr/lib/android/cmdline-tools
