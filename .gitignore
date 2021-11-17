@@ -16,3 +16,4 @@ node_modules/
 src/.gradle
 /src/gradle
 /src/gradlew*
+/src/res/android/cincopanew.keystore
