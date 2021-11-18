@@ -11,8 +11,9 @@ services:
         NODE_VERSION: ${NODE_VERSION}
         DEBIAN_VERSION: ${DEBIAN_VERSION}
         JDK_VERSION: ${JDK_VERSION}
+        BUILD_TOOLS_VERSION: ${BUILD_TOOLS_VERSION}
     volumes:
       - ./src:/usr/src/cordova
-      - ./build:/usr/src/cordova/PATH_TO_BUILD_FOLDER
+      - ./build:/usr/src/cordova/platforms/android/app/build/outputs/apk
     env_file:
       - .env

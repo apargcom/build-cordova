@@ -1,9 +1,9 @@
 # Build Cordova app 
 ### Add keystore file
-Add keystore file to */res/android*. Change keystore file name and add crdentials to *release-signing.properties* file. 
+Add keystore file to */res/android*. Create *release-signing.properties* file write keystore file name and add crdentials.
 ### Create .env file
 ```
-cp .env.example .env
+$ cp .env.example .env
 ```
 ### Run docker containers
 ```

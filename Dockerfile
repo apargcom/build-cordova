@@ -1,40 +1,41 @@
 ARG NODE_VERSION DEBIAN_VERSION
 FROM node:${NODE_VERSION}-${DEBIAN_VERSION}-slim as base
 
-ARG ANDROID_API_LEVEL GRADLE_VERSION JDK_VERSION
+ARG ANDROID_API_LEVEL GRADLE_VERSION JDK_VERSION BUILD_TOOLS_VERSION
 
 RUN apt-get update && \
     apt-get -y install git && \
     apt-get -y install wget && \
     apt-get -y install unzip
 
-RUN apt-get -y install openjdk-${JDK_VERSION}-jdk
-
 RUN npm install -g cordova
 
-WORKDIR /usr/lib/android
+RUN apt-get -y install openjdk-${JDK_VERSION}-jdk
+ENV JAVA_HOME=/usr/lib/jvm/java-${JDK_VERSION}-openjdk-amd64 \
+    PATH=${PATH}:/usr/lib/jvm/java-${JDK_VERSION}-openjdk-amd64
+
+
+WORKDIR /opt/gradle
+RUN wget -O gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-all.zip && \
+    unzip gradle.zip -d .
+ENV GRADLE_HOME=/opt/gradle/gradle-${GRADLE_VERSION} \
+    PATH=${PATH}:/opt/gradle/gradle-${GRADLE_VERSION}/bin \
+    CORDOVA_ANDROID_GRADLE_DISTRIBUTION_URL=file:///opt/gradle/gradle.zip
+
+WORKDIR /opt/android
 RUN wget -O cmdtools.zip https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip && \
     unzip cmdtools.zip -d . && \
     rm cmdtools.zip && \
-    #mv cmdline-tools tools && \
-    yes | ./cmdline-tools/bin/sdkmanager --licenses --sdk_root="/usr/lib/android" && \
-    ./cmdline-tools/bin/sdkmanager "build-tools;30.0.2" "platform-tools" "platforms;android-${ANDROID_API_LEVEL}" --sdk_root="/usr/lib/android"
-ENV ANDROID_SDK_ROOT=/usr/lib/android \
-    ANDROID_HOME=/usr/lib/android/platforms/android-${ANDROID_API_LEVEL} \
-    PATH=${PATH}:/usr/lib/android/tools:/usr/lib/android/platform-tools:/usr/lib/android/cmdline-tools
-
-RUN wget -O gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-all.zip && \
-    unzip gradle.zip -d . && \
-    rm gradle.zip
-ENV GRADLE_HOME=/usr/lib/android/gradle-${GRADLE_VERSION} \
-    PATH=${PATH}:/usr/lib/android/gradle-${GRADLE_VERSION}/bin
+    yes | ./cmdline-tools/bin/sdkmanager --licenses --sdk_root="/opt/android" && \
+    ./cmdline-tools/bin/sdkmanager "build-tools;${BUILD_TOOLS_VERSION}" "platform-tools" "platforms;android-${ANDROID_API_LEVEL}" "extras;google;google_play_services" --sdk_root="/opt/android"
+ENV ANDROID_SDK_ROOT=/opt/android \
+    ANDROID_HOME=/opt/android \
+    PATH=${PATH}:/opt/android/tools:/opt/android/tools/bin:/opt/android/platform-tools:/opt/android/cmdline-tools:/opt/android:/opt/android/platforms/android-${ANDROID_API_LEVEL}
 
 WORKDIR /usr/src/cordova
-#TODO: Work on build process
-CMD ${ALWAYS_RUN} && read PAUSE && \
-    cordova telemetry off
-    #cordova platform add android ; \
-    #cordova build --no-telemetry
+CMD cordova telemetry off && \
+    cordova platform add android ; \
+    cordova build
     
 
     
