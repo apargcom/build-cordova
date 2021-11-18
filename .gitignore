@@ -17,3 +17,4 @@ src/.gradle
 /src/gradle
 /src/gradlew*
 /src/res/android/cincopanew.keystore
+/src/res/android/release-signing.properties
