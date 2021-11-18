@@ -33,9 +33,11 @@ ENV ANDROID_SDK_ROOT=/opt/android \
     PATH=${PATH}:/opt/android/tools:/opt/android/tools/bin:/opt/android/platform-tools:/opt/android/cmdline-tools:/opt/android:/opt/android/platforms/android-${ANDROID_API_LEVEL}
 
 WORKDIR /usr/src/cordova
+#TODO: Work on build process
 CMD cordova telemetry off && \
     cordova platform add android ; \
-    cordova build
+    cordova build && \
+    ${ALWAYS_RUN} && read PAUSE
     
 
     

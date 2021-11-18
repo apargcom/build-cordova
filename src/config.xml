@@ -20,7 +20,7 @@
     <plugin name="cordova-plugin-screen-orientation" source="npm" />   
     <plugin name="rollbar-cordova" />
     <plugin name="cordova-plugin-inappbrowser" />
-	<plugin name="cordova-plugin-chromecast" />
+	<!-- <plugin name="cordova-plugin-chromecast" /> -->
     <!-- <preference name="AppendUserAgent" value="cincopatv" /> -->
     <platform name="android">
         <!-- <meta-data android:name="com.rollbar.android.ACCESS_TOKEN" android:value="10cb4ad8785245b9bc8e39bd1e6f4ca4" /> -->
@@ -42,6 +42,7 @@
         <!-- before build do not forget to fill keystore information-->
         <resource-file src="res/android/cincopanew.keystore" target="cincopanew.keystore" />
         <resource-file src="res/android/release-signing.properties" target="release-signing.properties" />
+        <resource-file src="gradle.properties" target="gradle.properties" />
         <!-- android tv support -->
         <edit-config target="/manifest" file="AndroidManifest.xml" mode="add" >
              <uses-feature android:name="android.software.leanback" android:required="false" />
