@@ -10,22 +10,24 @@
     <content src="index.html" />
     <access origin="*" />
     <preference value="cli-9.0.0" name="phonegap-version"/>
-    <plugin name="cordova-plugin-device" />
+    <plugin name="cordova-plugin-device" spec="2.0.3" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <plugin name="cordova-plugin-screen-orientation" source="npm" />   
-    <plugin name="rollbar-cordova" />
-    <plugin name="cordova-plugin-inappbrowser" />
-	<!-- <plugin name="cordova-plugin-chromecast" /> -->
+    <plugin name="cordova-plugin-screen-orientation" source="npm" spec="3.0.2" />   
+    <plugin name="rollbar-cordova" spec="0.1.0" />
+    <plugin name="es6-promise-plugin" spec="4.2.2" />
+    <plugin name="cordova-plugin-whitelist" spec="1.3.4" />
+    <plugin name="cordova-plugin-inappbrowser" spec="4.1.0" />
+	<!-- <plugin name="cordova-plugin-chromecast" spec="1.0.0" /> -->
     <!-- <preference name="AppendUserAgent" value="cincopatv" /> -->
     <platform name="android">
         <!-- <meta-data android:name="com.rollbar.android.ACCESS_TOKEN" android:value="10cb4ad8785245b9bc8e39bd1e6f4ca4" /> -->
         <allow-intent href="market:*" />
-         <plugin name="cordova-plugin-fullscreen" />
+        <plugin name="cordova-plugin-fullscreen" spec="1.3.0" />
         <icon density="ldpi" src="res/android/icons/ldpi.png" />
         <icon density="mdpi" src="res/android/icons/mdpi.png" />
         <icon density="hdpi" src="res/android/icons/hdpi.png" />
@@ -45,7 +47,7 @@
         <resource-file src="gradle.properties" target="gradle.properties" />
         <!-- android tv support -->
         <edit-config target="/manifest" file="AndroidManifest.xml" mode="add" >
-             <uses-feature android:name="android.software.leanback" android:required="false" />
+            <uses-feature android:name="android.software.leanback" android:required="false" />
             <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
             <uses-feature android:name="android.hardware.camera" android:required="false" />
             <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
@@ -60,8 +62,8 @@
             <uses-feature android:name="android.hardware.sensor" android:required="false" />
             <uses-feature android:name="android.hardware.screen.portrait" android:required="false" />
         </edit-config>
-         <edit-config target="/manifest/application/activity/intent-filter" file="AndroidManifest.xml" mode="add" >
-             <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+        <edit-config target="/manifest/application/activity/intent-filter" file="AndroidManifest.xml" mode="add" >
+            <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
         </edit-config>
         <edit-config file="AndroidManifest.xml" target="/manifest/application" mode="merge">
             <application android:banner="@mipmap/banner" />
@@ -130,4 +132,5 @@
          <preference name="RollbarClientToken" value="10cb4ad8785245b9bc8e39bd1e6f4ca4" />
     </platform>
     <engine name="ios" spec="https://github.com/apache/cordova-ios.git#6.1.0" />
+    <engine name="android" spec="https://github.com/apache/cordova-android.git#9.0.0" />
 </widget>

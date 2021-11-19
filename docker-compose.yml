@@ -14,6 +14,6 @@ services:
         BUILD_TOOLS_VERSION: ${BUILD_TOOLS_VERSION}
     volumes:
       - ./src:/usr/src/cordova
-      - ./build:/usr/src/cordova/platforms/android/app/build/outputs/apk
+      - ./build:/usr/src/build
     env_file:
       - .env

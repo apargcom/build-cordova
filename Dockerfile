@@ -14,7 +14,6 @@ RUN apt-get -y install openjdk-${JDK_VERSION}-jdk
 ENV JAVA_HOME=/usr/lib/jvm/java-${JDK_VERSION}-openjdk-amd64 \
     PATH=${PATH}:/usr/lib/jvm/java-${JDK_VERSION}-openjdk-amd64
 
-
 WORKDIR /opt/gradle
 RUN wget -O gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-all.zip && \
     unzip gradle.zip -d .
@@ -33,13 +32,8 @@ ENV ANDROID_SDK_ROOT=/opt/android \
     PATH=${PATH}:/opt/android/tools:/opt/android/tools/bin:/opt/android/platform-tools:/opt/android/cmdline-tools:/opt/android:/opt/android/platforms/android-${ANDROID_API_LEVEL}
 
 WORKDIR /usr/src/cordova
-#TODO: Work on build process
 CMD cordova telemetry off && \
     cordova platform add android ; \
-    cordova build && \
+    cordova build --${BUILD_TYPE} && \
+    cp -a platforms/android/app/build/outputs/apk/. ../build && \
     ${ALWAYS_RUN} && read PAUSE
-    
-
-    
-
-
