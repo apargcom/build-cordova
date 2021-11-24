@@ -1,0 +1,20 @@
+{
+    "android": {
+        "debug": {
+            "keystore": "PATH TO KEYSTORE FILE",
+            "storePassword": "",
+            "alias": "",
+            "password" : "",
+            "keystoreType": "",
+            "packageType": "apk"
+        },
+        "release": {
+            "keystore": "PATH TO KEYSTORE FILE",
+            "storePassword": "",
+            "alias": "",
+            "password" : "",
+            "keystoreType": "",
+            "packageType": "bundle"
+        }
+    }
+}

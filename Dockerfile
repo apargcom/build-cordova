@@ -35,5 +35,5 @@ WORKDIR /usr/src/cordova
 CMD cordova telemetry off && \
     cordova platform add android ; \
     cordova build --${BUILD_TYPE} && \
-    cp -a platforms/android/app/build/outputs/apk/. ../build && \
+    cp -a platforms/android/app/build/outputs/. ../build ; \
     ${ALWAYS_RUN} && read PAUSE

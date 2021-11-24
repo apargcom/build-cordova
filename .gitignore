@@ -11,6 +11,7 @@ node_modules/
 /src/platforms/
 
 # added by me
+/src/build.json
 /src/package.json
 /src/package-lock.json
 src/.gradle

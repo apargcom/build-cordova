@@ -10,6 +10,7 @@
     <content src="index.html" />
     <access origin="*" />
     <preference value="cli-9.0.0" name="phonegap-version"/>
+    <hook src="after_platform_add.sh" type="after_platform_add" />
     <plugin name="cordova-plugin-device" spec="2.0.3" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
